@@ -2,17 +2,20 @@
 public class SuggestId {
 
 	public static void main(String[] args) {
-		System.out.println(solution("Hello World!_H...ABCD."));
+		System.out.println(solution("Hello World!_H..."));
+		System.out.println(solution(""));
+		System.out.println(solution("z-+.^."));
 
 	}
 	
 	public static String solution(String new_id) {
+		String answer = "";
 		char[] id = new_id.toCharArray();
 		int len = id.length;
 		
 		for(int i=0; i<len; i++) {
 			char c = id[i];
-			if(('a'<=c && c<='z') || c=='-' || c=='_' || c=='.') 
+			if(('a'<=c && c<='z') || c=='-' || c=='_' || c=='.' || ('0'<=c && c<='9')) 
 				continue;
 			
 			if('A'<=c && c<='Z') {
@@ -47,8 +50,24 @@ public class SuggestId {
 				len--;
 			}
 		}
+		for(int i=(len-1); i>=0; i--) {
+			if(id[i]!='.')
+				break;
+			len--;
+		}
 		
-		String answer = String.valueOf(id);
+		for(int i=0; i<len; i++)
+			answer += id[i];
+		
+		if(answer.length()==0)
+			answer += 'a';
+		if(answer.length()<3) {
+			int l = answer.length();
+			for(int i=l; i<3; i++) {
+				answer += answer.charAt(l-1);
+			}
+		}
+		
 		return answer;
 	}
 	
